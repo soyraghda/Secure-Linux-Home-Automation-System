@@ -53,13 +53,29 @@ Then configure the corresponding file:
 ```shell-session
 $ vi /yocto/project/poky/meta/recipes-extended/pam/libpam/pam.d/common-password
 In the first line, include the pam_pwquality.so module and set the following parameters:
-	password        requisite         /usr/lib/security/pam_pwquality.so minlen=10 lcredit=0 minclass=3
+	password        requisite         /usr/lib/security/pam_pwquality.so minlen=10 
 ```
 #### Explanation
   - `minlen=10`: Ensures passwords contain a minimum of 10 characters.
-  - `lcredit=0`: Requires at least one lowercase letter in the password.
-  - `minclass=3`: Enforces the use of letters, numbers, and special characters in passwords.
 
+### 3. Passwords must contain a combination of alpha, numeric, and special characters**
+
+```shell-session
+        In the same file 'common-password' we added the 'minclass=3' parameter to the pam_pwquality.so module
+        password        requisite         /usr/lib/security/pam_pwquality.so minlen=10 lcredit=0 minclass=3
+```
+#### Explanation
+  - `minclass=3`: will enforce that the passwords contain letters, numbers and special characters*
+  - `lcredit=0`: will specify that the password must contain at least one lowercase letter*
+
+### 4. Disallow usernames or user IDs to be used as passwords**
+
+```shell-session
+        In the same file 'common-password' we added the 'usercheck=1' parameter to the pam_pwquality.so module
+        password        requisite         /usr/lib/security/pam_pwquality.so minlen=10 lcredit=0 minclass=3 usercheck=1
+```
+#### Explanation
+  - `usercheck=1`: will make sure that the password does not contain the username or user ID of the user
 
 
 
