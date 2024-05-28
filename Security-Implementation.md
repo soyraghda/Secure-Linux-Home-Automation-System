@@ -138,4 +138,54 @@ Moreover, in the 'common-account' we made it required to include and check the p
 	auth    required                        pam_faillock.so
 ```
 
+# Implementation of Security Requirment 2 : Kernel Hardening
+
+In order to make use of the sysctl we need to install 'sysctl' and the 'procps' package in our local.conf file.
+
+First naviagate to the local.conf file
+
+```shell-session
+        $ vi /yocto/project/build/conf/local.conf
+```
+We will add the following lines to it:
+
+```shell-session
+        DISTRO_FEATURES:append = " systemd"
+        IMAGE_INSTALL:append = " procps"
+```
+
+### 1. General Kernel Hardening Configurations
+
+To do our configurations we need to navigate to the sysctl.conf file , where the dynamic kernel configurations can be done
+
+```shell-session
+	$ vi /yocto/project/poky/meta/recipes-extended/procps/procps/sysctl.conf
+```
+
+The we will add the following hardening configurations:
+
+```shell-session
+	###################---KERNEL CONFIGURATIONS---################################
+	# Restrict access to the dmesg buffer (equivalent to CONFIG_SECURITY_DMESG_RESTRICT=y)
+	kernel.dmesg_restrict=1
+	# Hide kernel addresses in /proc and various other interfaces ,including from privileged users
+	kernel.kptr_restrict=2
+	# Disable Magic System Request Key combinations
+	kernel.sysrq=0
+	# Completely shut down the system if the Linux kernel behaves unexpectedly
+	kernel.panic_on_oops=1
+```
+
+### 2. File System Hardening Configurations
+
+We also added the file system hardening configurations to the same file:
+
+```shell-session
+	###################---FILE SYSTEM CONFIGURATIONS---#############################
+	# Allows to prohibit opening FIFOs and "regular" files that are not owned by the user in sticky folders for everyone to write.
+	fs.protected_fifos=2
+	fs.protected_regular=2
+	# Restrict the creation of hard links to files whose user is owner.
+	fs.protected_hardlinks=1
+```
 
