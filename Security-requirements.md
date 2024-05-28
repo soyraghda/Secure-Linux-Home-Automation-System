@@ -211,7 +211,7 @@
 - When only essential packages are installed, exposure to known vulnerabilities associated with unnecessary software is reduced. Frequent security updates are required for all installed packages, so minimizing the number of packages simplifies this process.
 - Auditing a minimal system is more straightforward. By focusing on a smaller set of components, it can be ensured that each one adheres to security best practices.
 
-## Sudo hardening
+### Sudo hardening
 
 **Objectives:**
 - Restrictive Sudoers Configuration: Instead of allowing all commands, create a strict sudoers file that specifies which commands each user or group can run.
