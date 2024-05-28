@@ -56,7 +56,6 @@ In the first line, include the pam_pwquality.so module and set the following par
 	password        requisite         /usr/lib/security/pam_pwquality.so minlen=10 lcredit=0 minclass=3
 ```
 #### Explanation
-- Configuring the common-password file to enforce password policies:
   - `minlen=10`: Ensures passwords contain a minimum of 10 characters.
   - `lcredit=0`: Requires at least one lowercase letter in the password.
   - `minclass=3`: Enforces the use of letters, numbers, and special characters in passwords.
