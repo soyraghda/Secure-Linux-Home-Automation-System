@@ -50,7 +50,7 @@ To implement this, navigate to the directory related to password configurations:
 $ cd /yocto/project/poky/meta/recipes-extended/pam/libpam/pam.d
 ```
 Then configure the corresponding file:
-```shell-session
+```shell
 $ vi /yocto/project/poky/meta/recipes-extended/pam/libpam/pam.d/common-password
 In the first line, include the pam_pwquality.so module and set the following parameters:
 	password        requisite         /usr/lib/security/pam_pwquality.so minlen=10 
@@ -60,7 +60,7 @@ In the first line, include the pam_pwquality.so module and set the following par
 
 ### 3. Passwords must contain a combination of alpha, numeric, and special characters
 
-```shell-session
+```shell
         In the same file 'common-password' we added the 'minclass=3' parameter to the pam_pwquality.so module
         password        requisite         /usr/lib/security/pam_pwquality.so minlen=10 lcredit=0 minclass=3
 ```
@@ -70,7 +70,7 @@ In the first line, include the pam_pwquality.so module and set the following par
 
 ### 4. Disallow usernames or user IDs to be used as passwords
 
-```shell-session
+```shell
         In the same file 'common-password' we added the 'usercheck=1' parameter to the pam_pwquality.so module
         password        requisite         /usr/lib/security/pam_pwquality.so minlen=10 lcredit=0 minclass=3 usercheck=1
 ```
@@ -79,7 +79,7 @@ In the first line, include the pam_pwquality.so module and set the following par
 
 ### 5. Prevent the user from using the last 3 passwords
 
-```shell-session
+```shell
         In the same file 'common-password' we added the 'remember=3' parameter to the pam_pwquality.so module
         password        requisite         /usr/lib/security/pam_pwquality.so minlen=10 lcredit=0 minclass=3 usercheck=1 remember=3
 ```
