@@ -42,7 +42,7 @@ $ vi /yocto/project/build/conf/local.conf
 ```
 This line is typically used in case of debugging and developing the system, therefore when the system is ready to be deployed this line needs to be removed.
 
-### 2. Passwords must adhere to a minimum length of 10 characters**
+### 2. Passwords must adhere to a minimum length of 10 characters
 
 To implement this, navigate to the directory related to password configurations:
 
@@ -58,7 +58,7 @@ In the first line, include the pam_pwquality.so module and set the following par
 #### Explanation
   - `minlen=10`: Ensures passwords contain a minimum of 10 characters.
 
-### 3. Passwords must contain a combination of alpha, numeric, and special characters**
+### 3. Passwords must contain a combination of alpha, numeric, and special characters
 
 ```shell-session
         In the same file 'common-password' we added the 'minclass=3' parameter to the pam_pwquality.so module
@@ -68,7 +68,7 @@ In the first line, include the pam_pwquality.so module and set the following par
   - `minclass=3`: will enforce that the passwords contain letters, numbers and special characters*
   - `lcredit=0`: will specify that the password must contain at least one lowercase letter*
 
-### 4. Disallow usernames or user IDs to be used as passwords**
+### 4. Disallow usernames or user IDs to be used as passwords
 
 ```shell-session
         In the same file 'common-password' we added the 'usercheck=1' parameter to the pam_pwquality.so module
@@ -77,7 +77,65 @@ In the first line, include the pam_pwquality.so module and set the following par
 #### Explanation
   - `usercheck=1`: will make sure that the password does not contain the username or user ID of the user
 
+### 5. Prevent the user from using the last 3 passwords
 
+```shell-session
+        In the same file 'common-password' we added the 'remember=3' parameter to the pam_pwquality.so module
+        password        requisite         /usr/lib/security/pam_pwquality.so minlen=10 lcredit=0 minclass=3 usercheck=1 remember=3
+```
+#### Explanation
+  - `remember=3`: will remember the last 3 passwords for the user in order to prevent him from using them again
 
+### 6. Password should not contain simple/easy to guess words
+
+```shell-session
+        In the same file 'common-password' we added the 'dictcheck' parameter to the pam_pwquality.so module
+        password        requisite         /usr/lib/security/pam_pwquality.so minlen=10 lcredit=0 minclass=3 usercheck=1 remember=3 dictcheck=1
+```
+#### Explanation
+  - `dictcheck=1`: will make sure that the passwords do not contain simple or easy to guess words
+
+### 7. Hash passwords with function considered as safe
+
+```shell-session
+        In the same file 'common-password' we added the 'sha512' parameter to the pam_unix.so module
+        password        sufficient       pam_unix.so sha512 shadow use_authtok
+```
+#### Explanation
+  - `sha512`: will hash the passwords using the sha512 algorithm
+
+### 8. Lock the user account for 5 mins after 3 failed trials of entering the password
+
+Since the pam library and the libpwquality package did not include the pam_faillock.so with them so we added it to the following libpam recipe:
+
+```shell-session
+	$ vi /yocto/project/poky/meta/recipes-extended/pam/libpam/libpam_1.5.2.bb
+	Under the 'RDEPENDS:${PN}-runtime' code we added the following line:
+	${MLPREFIX}pam-plugin-faillock-${libpam_suffix} \
+```
+In order to configure the the pam_faillock.so module we did the following:
+
+```shell-session
+	$ vi /yocto/project/poky/meta/recipes-extended/pam/libpam/pam.d/common-auth
+        In the 'common-auth' we added the following parameters to the pam_faillock.so module  
+        auth    required                        pam_faillock.so preauth silent deny=3 unlock_time=300 even_deny_root
+	auth    required                        pam_faillock.so authfail
+```
+
+#### Explanation
+  - `preauth` : Indicates that the account locking mechanism should be applied during the pre-authentication phase.
+  - `silent` : Specifies that no error message should be displayed to the user if authentication fails due to account lockout.
+  - `deny=3` : Specifies the number of consecutive authentication failures allowed before the account is locked.
+  - `unlock_time=300` : Specifies the duration (300sec = 5mins) for which the account remains locked after reaching the maximum number of failed login attempts.
+  - `even_deny_root` : Specifies that even the root account can be denied access if it fails authentication.
+  - `authfail` : Specifies that this rule applies specifically when authentication fails.
+
+Moreover, in the 'common-account' we made it required to include and check the pam_faillock.so module configurations
+
+```shell-session
+        $ vi /yocto/project/poky/meta/recipes-extended/pam/libpam/pam.d/common-acoount
+        In this file we added the following line at the end of it:
+	auth    required                        pam_faillock.so
+```
 
 
