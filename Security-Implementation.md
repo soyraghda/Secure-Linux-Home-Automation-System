@@ -88,7 +88,7 @@ In the first line, include the pam_pwquality.so module and set the following par
 
 ### 6. Password should not contain simple/easy to guess words
 
-```shell-session
+```shell
         In the same file 'common-password' we added the 'dictcheck' parameter to the pam_pwquality.so module
         password        requisite         /usr/lib/security/pam_pwquality.so minlen=10 lcredit=0 minclass=3 usercheck=1 remember=3 dictcheck=1
 ```
@@ -97,7 +97,7 @@ In the first line, include the pam_pwquality.so module and set the following par
 
 ### 7. Hash passwords with function considered as safe
 
-```shell-session
+```shell
         In the same file 'common-password' we added the 'sha512' parameter to the pam_unix.so module
         password        sufficient       pam_unix.so sha512 shadow use_authtok
 ```
@@ -108,14 +108,14 @@ In the first line, include the pam_pwquality.so module and set the following par
 
 Since the pam library and the libpwquality package did not include the pam_faillock.so with them so we added it to the following libpam recipe:
 
-```shell-session
+```shell
 	$ vi /yocto/project/poky/meta/recipes-extended/pam/libpam/libpam_1.5.2.bb
 	Under the 'RDEPENDS:${PN}-runtime' code we added the following line:
 	${MLPREFIX}pam-plugin-faillock-${libpam_suffix} \
 ```
 In order to configure the the pam_faillock.so module we did the following:
 
-```shell-session
+```shell
 	$ vi /yocto/project/poky/meta/recipes-extended/pam/libpam/pam.d/common-auth
         In the 'common-auth' we added the following parameters to the pam_faillock.so module  
         auth    required                        pam_faillock.so preauth silent deny=3 unlock_time=300 even_deny_root
@@ -132,7 +132,7 @@ In order to configure the the pam_faillock.so module we did the following:
 
 Moreover, in the 'common-account' we made it required to include and check the pam_faillock.so module configurations
 
-```shell-session
+```shell
         $ vi /yocto/project/poky/meta/recipes-extended/pam/libpam/pam.d/common-acoount
         In this file we added the following line at the end of it:
 	auth    required                        pam_faillock.so
@@ -144,12 +144,12 @@ In order to make use of the sysctl we need to install 'sysctl' and the 'procps' 
 
 First naviagate to the local.conf file
 
-```shell-session
+```shell
         $ vi /yocto/project/build/conf/local.conf
 ```
 We will add the following lines to it:
 
-```shell-session
+```shell
         DISTRO_FEATURES:append = " systemd"
         IMAGE_INSTALL:append = " procps"
 ```
@@ -158,13 +158,13 @@ We will add the following lines to it:
 
 To do our configurations we need to navigate to the sysctl.conf file , where the dynamic kernel configurations can be done
 
-```shell-session
+```shell
 	$ vi /yocto/project/poky/meta/recipes-extended/procps/procps/sysctl.conf
 ```
 
 The we will add the following hardening configurations:
 
-```shell-session
+```shell
 	###################---KERNEL CONFIGURATIONS---################################
 	# Restrict access to the dmesg buffer (equivalent to CONFIG_SECURITY_DMESG_RESTRICT=y)
 	kernel.dmesg_restrict=1
@@ -180,7 +180,7 @@ The we will add the following hardening configurations:
 
 We also added the file system hardening configurations to the same file:
 
-```shell-session
+```shell
 	###################---FILE SYSTEM CONFIGURATIONS---#############################
 	# Allows to prohibit opening FIFOs and "regular" files that are not owned by the user in sticky folders for everyone to write.
 	fs.protected_fifos=2
