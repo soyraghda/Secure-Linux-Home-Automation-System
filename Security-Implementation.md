@@ -42,7 +42,7 @@ $ vi /yocto/project/build/conf/local.conf
 ```
 This line is typically used in case of debugging and developing the system, therefore when the system is ready to be deployed this line needs to be removed.
 
-**2. Passwords must adhere to a minimum length of 10 characters**
+###2. Passwords must adhere to a minimum length of 10 characters**
 
 To implement this, navigate to the directory related to password configurations:
 
