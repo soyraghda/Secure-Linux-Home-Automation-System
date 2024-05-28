@@ -62,9 +62,8 @@ To harden the operating system against potential threats, the following scenario
   * Compromise of administrative credentials could result in the unauthorized modification of system settings, including device configurations, network access controls, or user permissions.
   * Manipulation of system configuration settings by unauthorized administrators could disrupt device functionality, compromise system integrity, or expose sensitive data to unauthorized access or theft.
   * Abuse of administrative privileges to install unauthorized software or firmware updates could introduce vulnerabilities or backdoors into the system, posing security risks to all connected devices and occupants.
+## Assets to Protect
 
-Assets to Protect
------------------
 - **A01: User Data**
   Personal information of the homeowners, such as names, addresses, schedules, and preferences stored on the local disk.
 
@@ -80,67 +79,20 @@ Assets to Protect
 - **A05: Configuration Settings**
   Settings and configurations for individual devices, schedules, and system preferences.
 
-- Some additional assets to protect with their protection level are shown in the table below:
+Additional assets to protect with their protection level are shown in the table below:
 
-.. list-table:: Additional assets to protect
-   :widths: 25 25 25 25 50
-   :header-rows: 1
-
-   * - Asset
-     - Integrity
-     - Confidentiality
-     - Availability
-     - Security Objectives
-   * - Bootloader code
-     - ✔️
-     - 
-     - ✔️
-     - Embedded system physical access protection (lock, …), (partition nosuid, nodev, noexec), secure boot (signed binary)
-
-   * - Bootloader configuration
-     - ✔️
-     - 
-     - ✔️
-     - Embedded system physical access protection (lock, …), (partition nosuid, nodev, noexec), secure boot (signed binary)
-
-   * - Linux kernel binary
-     - ✔️
-     - 
-     - ✔️
-     - Embedded system physical access protection (lock, …), (partition nosuid, nodev, noexec), secure boot (signed binary)
-
-   * - Initramfs
-     - ✔️
-     - 
-     - ✔️
-     - Embedded system physical access protection (lock, …), (partition nosuid, nodev, noexec), secure boot (signed binary)
-
-   * - Linux kernel command line
-     - ✔️
-     - 
-     - ✔️
-     - 
-   * - Linux kernel in-memory code and data
-     - ✔️
-     - ✔️
-     - ✔️
-     - kernel self-protection project (KSP) aslr …, dm-crypt, dm-integrity
-
-   * - Application in-memory code and data
-     - ✔️
-     - ✔️
-     - 
-     - dm-crypt, dm-verity
-   * - User authentication secret
-     - ✔️
-     - ✔️
-     - 
-     - TPM, dm-crypt, dm-verity, MAC
-   * - User application configuration
-     - ✔️
-     - ✔️
-     - ✔️
-     - DAC, MAC, dm-integrity
+| Asset                   | Integrity | Confidentiality | Availability | Security Objectives                                                                                   |
+|-------------------------|-----------|-----------------|--------------|-------------------------------------------------------------------------------------------------------|
+| Bootloader code         | ✔️        |                 | ✔️           | Embedded system physical access protection (lock, …), (partition nosuid, nodev, noexec), secure boot (signed binary)                                              |
+| Bootloader configuration| ✔️        |                 | ✔️           | Embedded system physical access protection (lock, …), (partition nosuid, nodev, noexec), secure boot (signed binary)                                              |
+| Linux kernel binary     | ✔️        |                 | ✔️           | Embedded system physical access protection (lock, …), (partition nosuid, nodev, noexec), secure boot (signed binary)                                              |
+| Initramfs               | ✔️        |                 | ✔️           | Embedded system physical access protection (lock, …), (partition nosuid, nodev, noexec), secure boot (signed binary)                                              |
+| Linux kernel command line | ✔️      |                 | ✔️           |                                                                                                       |
+| Linux kernel in-memory code and data | ✔️ | ✔️            | ✔️           | kernel self-protection project (KSP) aslr …, dm-crypt, dm-integrity                                                                                              |
+| Application in-memory code and data | ✔️ | ✔️            |              | dm-crypt, dm-verity                                                                                   |
+| User authentication secret | ✔️       | ✔️              |              | TPM, dm-crypt, dm-verity, MAC                                                                         |
+| User application configuration | ✔️  | ✔️              | ✔️           | DAC, MAC, dm-integrity                                                                                |
+ty
 
 Controls (Security Objectives/Requirements)
 --------------------------------------------
