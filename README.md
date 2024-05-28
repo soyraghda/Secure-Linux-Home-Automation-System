@@ -137,149 +137,26 @@ Hypotheses
 
 - The password security objective should also consider the passwords for service accounts (web services, etc.). We make the hypothesis that we trust service provider and that the security policies are applied to the service accounts.
 
+## Threat Model Summary
 
-Threat Model Summary
----------------------
+| Threat Agent | Asset | Attack | Attack Surface | Attack Goal | Impact | Control |
+|--------------|-------|--------|----------------|-------------|--------|---------|
+| TA01: Hackers | A01: User Data | Theft of personal information | Remote Access, Automation Scripts, Configuration Settings | Gain unauthorized access to sensitive data | Compromise of personal privacy, identity theft | C01: Password security and policy, C02: Kernel Hardening, C03: SSH Hardening, C05: Access control (ACL, DAC, MAC), C07: Network, C08: Web server security |
+|              | A02: Smart Devices | Unauthorized control or manipulation | Remote Access, Smart Devices | Gain control over smart devices for malicious purposes | Disruption of home automation, privacy invasion | C01: Password security and policy, C02: Kernel Hardening, C03: SSH Hardening, C05: Access control (ACL, DAC, MAC), C06: Partitions hardening, C07: Network, C08: Web server security |
+|              | A03: Automation Scripts | Manipulation or disruption of automation processes | Remote Access, Automation Scripts | Disrupt home automation functionality | Inconvenience, potential safety hazards | C02: Kernel Hardening, C05: Access control (ACL, DAC, MAC), C07: Network, C08: Web server security |
+|              | A04: Remote Access | Unauthorized access to remote systems | Remote Access | Gain control over the home automation system remotely | Unauthorized access, potential for further attacks | C01: Password security and policy, C02: Kernel Hardening, C03: SSH Hardening, C05: Access control (ACL, DAC, MAC), C07: Network, C08: Web server security |
+|              | A05: Configuration Settings | Unauthorized changes to settings | Remote Access, Configuration Settings | Modify system settings to disrupt or compromise functionality | Alteration of system behavior, privacy invasion | C01: Password security and policy, C02: Kernel Hardening, C03: SSH Hardening, C05: Access control (ACL, DAC, MAC), C07: Network, C08: Web server security |
+| TA02: Insiders | A01: User Data | Unauthorized access or disclosure of personal information | Remote Access, Automation Scripts, Configuration Settings | Gain access to personal information for malicious purposes | Compromise of personal privacy, identity theft | C01: Password security and policy, C02: Kernel Hardening, C03: SSH Hardening, C04: Principle of Least Privilege and roles separation, C05: Access control (ACL, DAC, MAC), C06: Partitions hardening, C07: Network, C08: Web server security |
+|              | A02: Smart Devices | Unauthorized control or sabotage | Remote Access, Smart Devices | Abuse of privileged access to manipulate smart devices | Disruption of home automation, privacy invasion | C01: Password security and policy, C02: Kernel Hardening, C03: SSH Hardening, C05: Access control (ACL, DAC, MAC), C06: Partitions hardening, C07: Network, C08: Web server security |
+|              | A03: Automation Scripts | Manipulation or disruption of automation processes | Remote Access, Automation Scripts | Disrupt home automation functionality | Inconvenience, potential safety hazards | C02: Kernel Hardening, C05: Access control (ACL, DAC, MAC), C07: Network, C08: Web server security |
+|              | A04: Remote Access | Unauthorized access to remote systems | Remote Access | Gain control over the home automation system remotely | Unauthorized access, potential for further attacks | C01: Strong Authentication, C02: Encryption, C03: Access Control, C07: Monitoring & Logging, C08: Web server security |
+|              | A05: Configuration Settings | Unauthorized changes to settings | Remote Access, Configuration Settings | Modify system settings to disrupt or compromise functionality | Alteration of system behavior, privacy invasion | C01: Password security and policy, C02: Kernel Hardening, C03: SSH Hardening, C05: Access control (ACL, DAC, MAC), C06: Partitions hardening, C07: Network, C08: Web server security |
+| TA03: Malware | A01: User Data | Data theft or encryption for ransom | Remote Access, Automation Scripts, Configuration Settings | Encrypt or steal personal information for financial gain | Loss of personal privacy, potential financial loss | C01: Password security and policy, C02: Kernel Hardening, C03: SSH Hardening, C04: Principle of Least Privilege and roles separation, C07: Network, C08: Web server security |
+|              | A02: Smart Devices | Malicious control or disruption | Remote Access, Smart Devices | Gain control over smart devices for malicious purposes | Disruption of home automation, privacy invasion | C01: Password security and policy, C02: Kernel Hardening, C03: SSH Hardening, C05: Access control (ACL, DAC, MAC), C06: Partitions hardening, C07: Network, C08: Web server security |
+|              | A03: Automation Scripts | Manipulation or disruption of automation processes | Remote Access, Automation Scripts | Disrupt home automation functionality | Inconvenience, potential safety hazards | C02: Kernel Hardening, C05: Access control (ACL, DAC, MAC), C07: Network, C08: Web server security |
+|              | A04: Remote Access | Unauthorized access to remote systems | Remote Access | Gain control over the home automation system remotely | Unauthorized access, potential for further attacks | C01: Password security and policy, C02: Kernel Hardening, C03: SSH Hardening, C05: Access control (ACL, DAC, MAC), C07: Network, C08: Web server security |
+|              | A05: Configuration Settings | Unauthorized changes to settings | Remote Access, Configuration Settings | Modify system settings to disrupt or compromise functionality | Alteration of system behavior, privacy invasion | C01: Password security and policy, C02: Kernel Hardening, C03: SSH Hardening, C05: Access control (ACL, DAC, MAC), C07: Network, C08: Web server security |
+| TA04: Eavesdroppers | A02: Smart Devices | Unauthorized access or manipulation | Smart Devices | Gain control over smart devices for surveillance or sabotage | Privacy invasion, potential for manipulation | C02: Kernel Hardening, C05: Access control (ACL, DAC, MAC),C06: Partitions hardening,C07: Network, C08:Web server security |
+|              | A04: Remote Access | Unauthorized access to remote systems | Remote Access | Gain access to remote communication channels for monitoring or interception | Eavesdropping, potential for unauthorized access | C01: Password security and policy, C02: Kernel Hardening, C03: SSH Hardening,C07: Network, C08:Web server security |
+| TA05: Physical Intruders | A05: Configuration Settings | Physical tampering or theft | Physical Infrastructure, Configuration Settings | Gain physical access to manipulate or steal system components | Alteration
 
-.. list-table:: Threat model summary
-   :widths: 25 25 25 25 25 25 50
-   :header-rows: 1
-
-   * - Threat Agent
-     - Asset
-     - Attack
-     - Attack Surface
-     - Attack Goal
-     - Impact
-     - Control
-   * - TA01: Hackers
-     - A01: User Data
-     - Theft of personal information
-     - Remote Access, Automation Scripts, Configuration Settings
-     - Gain unauthorized access to sensitive data
-     - Compromise of personal privacy, identity theft
-     - C01: Password security and policy, C02: Kernel Hardening, C03: SSH Hardening, C05: Access control (ACL, DAC, MAC), C07: Network, C08: Web server security
-   * - 
-     - A02: Smart Devices
-     - Unauthorized control or manipulation
-     - Remote Access, Smart Devices
-     - Gain control over smart devices for malicious purposes
-     - Disruption of home automation, privacy invasion
-     - C01: Password security and policy, C02: Kernel Hardening, C03: SSH Hardening, C05: Access control (ACL, DAC, MAC), C06: Partitions hardening, C07: Network, C08: Web server security
-   * - 
-     - A03: Automation Scripts
-     - Manipulation or disruption of automation processes
-     - Remote Access, Automation Scripts
-     - Disrupt home automation functionality
-     - Inconvenience, potential safety hazards
-     - C02: Kernel Hardening, C05: Access control (ACL, DAC, MAC), C07: Network, C08:Web server security
-   * - 
-     - A04: Remote Access
-     - Unauthorized access to remote systems
-     - Remote Access
-     - Gain control over the home automation system remotely
-     - Unauthorized access, potential for further attacks
-     - C01: Password security and policy, C02: Kernel Hardening, C03: SSH Hardening, C05: Access control (ACL, DAC, MAC), C07: Network, C08:Web server security
-   * - 
-     - A05: Configuration Settings
-     - Unauthorized changes to settings
-     - Remote Access, Configuration Settings
-     - Modify system settings to disrupt or compromise functionality
-     - Alteration of system behavior, privacy invasion
-     - C01: Password security and policy, C02: Kernel Hardening, C03: SSH Hardening, C05: Access control (ACL, DAC, MAC), C07: Network, C08: Web server security
-   
-   * - TA02: Insiders
-     - A01: User Data
-     - Unauthorized access or disclosure of personal information
-     - Remote Access, Automation Scripts, Configuration Settings
-     - Gain access to personal information for malicious purposes
-     - Compromise of personal privacy, identity theft
-     - C01: Password security and policy, C02: Kernel Hardening, C03: SSH Hardening, C04: Principle of Least Privilege and roles separation, C05: Access control (ACL, DAC, MAC), C06: Partitions hardening, C07: Network, C08: Web server security
-   * - 
-     - A02: Smart Devices
-     - Unauthorized control or sabotage
-     - Remote Access, Smart Devices
-     - Abuse of privileged access to manipulate smart devices
-     - Disruption of home automation, privacy invasion
-     - C01: Password security and policy, C02: Kernel Hardening, C03: SSH Hardening, C05: Access control (ACL, DAC, MAC), C06: Partitions hardening, C07: Network, C08: Web server security
-   * - 
-     - A03: Automation Scripts
-     - Manipulation or disruption of automation processes
-     - Remote Access, Automation Scripts
-     - Disrupt home automation functionality
-     - Inconvenience, potential safety hazards
-     - C02: Kernel Hardening, C05: Access control (ACL, DAC, MAC), C07: Network, C08: Web server security
-   * -
-     - A04: Remote Access
-     - Unauthorized access to remote systems
-     - Remote Access
-     - Gain control over the home automation system remotely
-     - Unauthorized access, potential for further attacks
-     - C01: Strong Authentication, C02: Encryption, C03: Access Control, C07: Monitoring & Logging, C08: Web server security
-   * -
-     - A05: Configuration Settings
-     - Unauthorized changes to settings
-     - Remote Access, Configuration Settings
-     - Modify system settings to disrupt or compromise functionality
-     - Alteration of system behavior, privacy invasion
-     - C01: Password security and policy, C02: Kernel Hardening, C03: SSH Hardening, C05: Access control (ACL, DAC, MAC), C06: Partitions hardening, C07: Network, C08: Web server security
-
-   * - TA03: Malware
-     - A01: User Data
-     - Data theft or encryption for ransom
-     - Remote Access, Automation Scripts, Configuration Settings
-     - Encrypt or steal personal information for financial gain
-     - Loss of personal privacy, potential financial loss
-     - C01: Password security and policy, C02: Kernel Hardening, C03: SSH Hardening, C04: Principle of Least Privilege and roles separation, C07: Network, C08:Web server security
-   * - 
-     - A02: Smart Devices
-     - Malicious control or disruption
-     - Remote Access, Smart Devices
-     - Gain control over smart devices for malicious purposes
-     - Disruption of home automation, privacy invasion
-     - C01: Password security and policy, C02: Kernel Hardening, C03: SSH Hardening, C05: Access control (ACL, DAC, MAC), C06: Partitions hardening, C07: Network, C08: Web server security
-   * - 
-     - A03: Automation Scripts
-     - Manipulation or disruption of automation processes
-     - Remote Access, Automation Scripts
-     - Disrupt home automation functionality
-     - Inconvenience, potential safety hazards
-     - C02: Kernel Hardening, C05: Access control (ACL, DAC, MAC), C07: Network, C08: Web server security
-   * -
-     - A04: Remote Access
-     - Unauthorized access to remote systems
-     - Remote Access
-     - Gain control over the home automation system remotely
-     - Unauthorized access, potential for further attacks
-     - C01: Password security and policy, C02: Kernel Hardening, C03: SSH Hardening, C05: Access control (ACL, DAC, MAC), C07: Network, C08: Web server security
-   * - 
-     - A05: Configuration Settings
-     - Unauthorized changes to settings
-     - Remote Access, Configuration Settings
-     - Modify system settings to disrupt or compromise functionality
-     - Alteration of system behavior, privacy invasion
-     - C01: Password security and policy, C02: Kernel Hardening, C03: SSH Hardening, C05: Access control (ACL, DAC, MAC), C07: Network, C08:Web server security 
-   
-   * - TA04: Eavesdroppers
-     - A02: Smart Devices
-     - Unauthorized access or manipulation
-     - Smart Devices
-     - Gain control over smart devices for surveillance or sabotage
-     - Privacy invasion, potential for manipulation
-     - C02: Kernel Hardening, C05: Access control (ACL, DAC, MAC),C06: Partitions hardening,C07: Network, C08:Web server security
-   * - 
-     - A04: Remote Access
-     - Unauthorized access to remote systems
-     - Remote Access
-     - Gain access to remote communication channels for monitoring or interception
-     - Eavesdropping, potential for unauthorized access
-     - C01: Password security and policy, C02: Kernel Hardening, C03: SSH Hardening,C07: Network, C08:Web server security
-
-   * - TA05: Physical Intruders	
-     - A05: Configuration Settings
-     - Physical tampering or theft
-     - Physical Infrastructure, Configuration Settings
-     - Gain physical access to manipulate or steal system components
-     - Alteration of system behavior, privacy invasion
-     - C06: Partitions hardening
-       
