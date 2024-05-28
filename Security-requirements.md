@@ -1,6 +1,6 @@
-## Security Requirements
+# Security Requirements
 
-### Password security and policy
+## Password security and policy
 
 **Objectives:**
 - The root account must be locked with a password.
@@ -29,7 +29,7 @@
 - Storing passwords in plaintext is a major flaw. Storing hashed passwords (using SHA-512) ensures irreversible transformation.
 - Common passwords like “password” are easily guessable. Encouraging unique, non-dictionary-based choices.
 
-### Kernel Hardening
+## Kernel Hardening
 
 **Objectives:**
 - Restrict access to the dmesg buffer.
@@ -49,7 +49,7 @@
 - The sticky bit on directories allows only the owner of a file to delete or rename it within that directory. By default, anyone can create files in a directory with the sticky bit set. Without the sticky bit, any user can create files in a directory. Malicious users could create files with harmful content. By setting the sticky bit, we restrict file creation to the owner, preventing unauthorized files from cluttering sensitive directories. This configuration also makes the spoofing attack harder to implement.
 - Limiting hard link creation helps prevent unauthorized modification. If an attacker creates a hard link to a sensitive file (e.g., SSH private key), they can modify it indirectly. By restricting hard link creation to file owners, we prevent unauthorized changes.
 
-### SSH Hardening
+## SSH Hardening
 
 **Objectives:**
 - Create and manage keys for passwordless logins.
@@ -211,7 +211,7 @@
 - When only essential packages are installed, exposure to known vulnerabilities associated with unnecessary software is reduced. Frequent security updates are required for all installed packages, so minimizing the number of packages simplifies this process.
 - Auditing a minimal system is more straightforward. By focusing on a smaller set of components, it can be ensured that each one adheres to security best practices.
 
-### Sudo hardening
+## Sudo hardening
 
 **Objectives:**
 - Restrictive Sudoers Configuration: Instead of allowing all commands, create a strict sudoers file that specifies which commands each user or group can run.
