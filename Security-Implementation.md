@@ -46,7 +46,7 @@ This line is typically used in case of debugging and developing the system, ther
 
 To implement this, navigate to the directory related to password configurations:
 
-```shell-session
+```shell
 $ cd /yocto/project/poky/meta/recipes-extended/pam/libpam/pam.d
 ```
 Then configure the corresponding file:
